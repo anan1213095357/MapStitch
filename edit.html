@@ -50,6 +50,10 @@
 
         .btn-export { background: #6a1b9a; border-color: #6a1b9a; color: white; font-weight: bold; }
         .btn-export:hover:not(:disabled) { background: #4a148c; }
+
+        /* 语言切换按钮样式 */
+        #btn-lang-toggle { background: #4caf50; border-color: #4caf50; color: white; font-weight: bold; }
+        #btn-lang-toggle:hover { background: #388e3c; }
         
         /* 状态按钮的激活态 */
         button.active[data-mode="expand"] { background: #4caf50; border-color: #4caf50; font-weight: bold; color: black;}
@@ -77,32 +81,34 @@
     <div class="toolbar-row">
         <!-- 逻辑更清晰的工程模块 -->
         <div class="btn-group">
-            <span class="group-label">📁 本地工程</span>
-            <select id="project-list" style="width: 130px;" title="选择本地已保存的项目"></select>
-            <button onclick="loadSelectedProject()">📂 读取地图</button>
-            <button onclick="deleteSelectedProject()" class="btn-danger">🗑️ 删除</button>
+            <span class="group-label" data-i18n="ui_local_proj">📁 本地工程</span>
+            <select id="project-list" style="width: 130px;" data-title-i18n="title_proj_list" title="选择本地已保存的项目"></select>
+            <button onclick="loadSelectedProject()" data-i18n="ui_load_map">📂 读取地图</button>
+            <button onclick="deleteSelectedProject()" class="btn-danger" data-i18n="ui_delete">🗑️ 删除</button>
             
             <div class="separator"></div>
             
-            <input type="text" id="project-name" value="新地图" style="width: 100px;" title="项目名称" placeholder="输入项目名称">
-            <button onclick="saveCurrentProject()" class="btn-primary">💾 保存 / 另存</button>
+            <input type="text" id="project-name" value="新地图" style="width: 100px;" data-title-i18n="title_proj_name" data-ph-i18n="title_proj_ph" title="项目名称" placeholder="输入项目名称">
+            <button onclick="saveCurrentProject()" class="btn-primary" data-i18n="ui_save">💾 保存 / 另存</button>
         </div>
 
         <!-- 基础地图图层管理组合 -->
         <div class="btn-group">
-            <span class="group-label">🌍 基础地图层</span>
-            <button onclick="triggerUploadBg()" class="btn-success">➕ 选定首图 (4K)</button>
-            <button id="btn-replace" onclick="triggerReplace()" disabled title="替换当前选中网格的底图">🔄 替换当前选中图</button>
+            <span class="group-label" data-i18n="ui_base_layer">🌍 基础地图层</span>
+            <button onclick="triggerUploadBg()" class="btn-success" data-i18n="ui_select_first">➕ 选定首图 (4K)</button>
+            <button id="btn-replace" onclick="triggerReplace()" disabled data-title-i18n="title_btn_replace" title="替换当前选中网格的底图" data-i18n="ui_replace_sel">🔄 替换当前选中图</button>
         </div>
         
         <!-- 建筑实体图层管理独立 -->
         <div class="btn-group">
-            <span class="group-label">✨ 建筑实体层</span>
-            <button id="btn-add-buildings" onclick="document.getElementById('upload-building-img').click()" class="btn-highlight" disabled>🔮 智能提取实体孤岛</button>
+            <span class="group-label" data-i18n="ui_build_layer">✨ 建筑实体层</span>
+            <button id="btn-add-buildings" onclick="document.getElementById('upload-building-img').click()" class="btn-highlight" disabled data-i18n="ui_smart_ext">🔮 智能提取实体孤岛</button>
         </div>
         
         <div class="btn-group" style="margin-left: auto; background: transparent; border: none;">
-            <button id="btn-export" onclick="exportGodotZip()" class="btn-export">📦 导出 Godot ZIP 引擎包</button>
+            <!-- 语言切换按钮 -->
+            <button id="btn-lang-toggle" onclick="toggleLang()">🌐 English</button>
+            <button id="btn-export" onclick="exportGodotZip()" class="btn-export" data-i18n="ui_export_godot">📦 导出 Godot ZIP 引擎包</button>
         </div>
     </div>
     
@@ -110,39 +116,39 @@
     <div class="toolbar-row">
         <!-- 基础操作 -->
         <div class="btn-group">
-            <span class="group-label">👆 基础交互</span>
-            <button class="mode-btn active" data-mode="expand" onclick="setMode('expand')">🖐️ 漫游 / 选中扩图</button>
+            <span class="group-label" data-i18n="ui_basic_int">👆 基础交互</span>
+            <button class="mode-btn active" data-mode="expand" onclick="setMode('expand')" data-i18n="ui_roam">🖐️ 漫游 / 选中扩图</button>
         </div>
 
         <!-- 实体编辑 -->
         <div class="btn-group">
-            <span class="group-label">✂️ 实体修剪</span>
-            <button class="mode-btn" data-mode="cut" onclick="setMode('cut')" title="目标区域将被提取为红色孤岛">✂️ 变红 (剔除)</button>
-            <button class="mode-btn" data-mode="merge" onclick="setMode('merge')" title="目标区域将被提取打包为绿色孤岛">🔗 变绿 (合并保留)</button>
+            <span class="group-label" data-i18n="ui_entity_trim">✂️ 实体修剪</span>
+            <button class="mode-btn" data-mode="cut" onclick="setMode('cut')" data-title-i18n="title_btn_cut" title="目标区域将被提取为红色孤岛" data-i18n="ui_cut_red">✂️ 变红 (剔除)</button>
+            <button class="mode-btn" data-mode="merge" onclick="setMode('merge')" data-title-i18n="title_btn_merge" title="目标区域将被提取打包为绿色孤岛" data-i18n="ui_merge_green">🔗 变绿 (合并保留)</button>
             <div class="separator"></div>
-            <label style="color:#aaa; font-size:12px; display:flex; align-items:center; gap:4px; cursor:pointer;" title="开启后：变绿模式下，只要框碰到一点绿岛，就会把整个绿岛吸附进去合并；而红色部分仍然只做精准的像素切割。">
-                <input type="checkbox" id="opt-smart-merge" checked> 绿岛整体吸附
+            <label style="color:#aaa; font-size:12px; display:flex; align-items:center; gap:4px; cursor:pointer;" data-title-i18n="title_chk_smart" title="开启后：变绿模式下，只要框碰到一点绿岛，就会把整个绿岛吸附进去合并；而红色部分仍然只做精准的像素切割。">
+                <input type="checkbox" id="opt-smart-merge" checked> <span data-i18n="ui_smart_merge">绿岛整体吸附</span>
             </label>
         </div>
 
         <!-- 游戏逻辑涂鸦 -->
         <div class="btn-group">
-            <span class="group-label">🛑 逻辑区域设定</span>
-            <button class="mode-btn" data-mode="col" onclick="setMode('col')">🟥 画禁足区</button>
-            <button class="mode-btn" data-mode="occ" onclick="setMode('occ')">🟦 画遮挡区</button>
-            <button class="mode-btn" data-mode="fg" onclick="setMode('fg')">🟨 画前景区</button>
+            <span class="group-label" data-i18n="ui_logic_area">🛑 逻辑区域设定</span>
+            <button class="mode-btn" data-mode="col" onclick="setMode('col')" data-i18n="ui_draw_col">🟥 画禁足区</button>
+            <button class="mode-btn" data-mode="occ" onclick="setMode('occ')" data-i18n="ui_draw_occ">🟦 画遮挡区</button>
+            <button class="mode-btn" data-mode="fg" onclick="setMode('fg')" data-i18n="ui_draw_fg">🟨 画前景区</button>
         </div>
         
         <!-- 辅助笔刷 -->
         <div class="btn-group">
-            <span class="group-label">📐 笔刷形状</span>
+            <span class="group-label" data-i18n="ui_brush_shape">📐 笔刷形状</span>
             <select id="shape-select" onchange="shapeTool = this.value">
-                <option value="click">🖱️ 点选变色 (一键转换孤岛红/绿状态)</option>
-                <option value="poly">📌 多边形套索 (首尾闭合生效)</option>
-                <option value="rect">🔲 矩形套索 (鼠标拖拽松开生效)</option>
-                <option value="freeline">〰️ 物理划线刀 (拖拽划线切割孤岛)</option>
+                <option value="click" data-i18n="opt_click">🖱️ 点选变色 (一键转换孤岛红/绿状态)</option>
+                <option value="poly" data-i18n="opt_poly">📌 多边形套索 (首尾闭合生效)</option>
+                <option value="rect" data-i18n="opt_rect">🔲 矩形套索 (鼠标拖拽松开生效)</option>
+                <option value="freeline" data-i18n="opt_free">〰️ 物理划线刀 (拖拽划线切割孤岛)</option>
             </select>
-            <button onclick="undoShape()">↩️ 撤销上一步</button>
+            <button onclick="undoShape()" data-i18n="ui_undo">↩️ 撤销上一步</button>
         </div>
     </div>
 </div>
@@ -153,13 +159,128 @@
 <input type="file" id="upload-chunk-img" style="display:none;" accept="image/png, image/jpeg">
 <input type="file" id="upload-building-img" style="display:none;" accept="image/png, image/jpeg">
 
-<img id="debug-img" title="发给AI的边缘参考图">
+<img id="debug-img" data-title-i18n="title_debug" title="发给AI的边缘参考图">
 <div id="status-bar">正在加载数据库...</div>
 <canvas id="canvas"></canvas>
 
 <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    
+    // ==========================================
+    // 🌐 多语言 i18n 核心模块
+    // ==========================================
+    let currentLang = 'zh';
+    const i18n = {
+        'zh': {
+            'ui_local_proj': '📁 本地工程', 'title_proj_list': '选择本地已保存的项目', 'ui_load_map': '📂 读取地图',
+            'ui_delete': '🗑️ 删除', 'title_proj_name': '项目名称', 'title_proj_ph': '输入项目名称',
+            'ui_save': '💾 保存 / 另存', 'ui_base_layer': '🌍 基础地图层', 'ui_select_first': '➕ 选定首图 (4K)',
+            'title_btn_replace': '替换当前选中网格的底图', 'ui_replace_sel': '🔄 替换当前选中图',
+            'ui_build_layer': '✨ 建筑实体层', 'ui_smart_ext': '🔮 智能提取实体孤岛',
+            'ui_export_godot': '📦 导出 Godot ZIP 引擎包', 'ui_basic_int': '👆 基础交互',
+            'ui_roam': '🖐️ 漫游 / 选中扩图', 'ui_entity_trim': '✂️ 实体修剪',
+            'title_btn_cut': '目标区域将被提取为红色孤岛', 'ui_cut_red': '✂️ 变红 (剔除)',
+            'title_btn_merge': '目标区域将被提取打包为绿色孤岛', 'ui_merge_green': '🔗 变绿 (合并保留)',
+            'title_chk_smart': '开启后：变绿模式下，只要框碰到一点绿岛，就会把整个绿岛吸附进去合并；而红色部分仍然只做精准的像素切割。',
+            'ui_smart_merge': '绿岛整体吸附', 'ui_logic_area': '🛑 逻辑区域设定',
+            'ui_draw_col': '🟥 画禁足区', 'ui_draw_occ': '🟦 画遮挡区', 'ui_draw_fg': '🟨 画前景区',
+            'ui_brush_shape': '📐 笔刷形状', 'opt_click': '🖱️ 点选变色 (一键转换孤岛红/绿状态)',
+            'opt_poly': '📌 多边形套索 (首尾闭合生效)', 'opt_rect': '🔲 矩形套索 (鼠标拖拽松开生效)',
+            'opt_free': '〰️ 物理划线刀 (拖拽划线切割孤岛)', 'ui_undo': '↩️ 撤销上一步', 'title_debug': '发给AI的边缘参考图',
+            
+            'msg_ready': '就绪 | 悬浮物理区可单删 | 右键漫游 | 滚轮无极缩放',
+            'msg_db_fail': '本地数据库初始化失败，保存功能可能不可用。', 'msg_enter_name': '请输入项目名称！',
+            'msg_saving': '正在极速保存项目到本地缓存...', 'msg_save_succ': '项目 [NAME] 保存成功！',
+            'msg_loading': '正在读取项目 [NAME]，正在重建内存图集...', 'msg_load_succ': '项目 [NAME] 读取成功！已完全恢复。',
+            'msg_del_conf': '确定要永久删除项目 [NAME] 吗？', 'msg_del_succ': '项目 [NAME] 已彻底删除。',
+            'msg_undo': '已撤销一个 MODE 区域', 'msg_auto_crop': '已自动裁去重复边缘并完美对接，无缝隙！',
+            'msg_bg_replaced': '背景已替换', 'msg_analyze': '正在自动分析图像底色，执行智能形态愈合与轮廓提取...',
+            'msg_no_build': '未能识别到有效建筑。', 'msg_ext_succ': '完美！自动识别底色，连通实体已独立分离为 NUM 个绿色孤岛！',
+            'msg_merge_succ': '🔗 框选合并生效！已完美融合为【绿色保留孤岛】', 'msg_merge_smart': ' (触发完整绿岛吸附)',
+            'msg_merge_pixel': ' (仅切割像素)', 'msg_cut_succ': '✂️ 框选切除生效！框内像素已切下并独立为【红色剔除孤岛】。',
+            'msg_line_cut': '〰️ 划线切割生效！实体已沿线条被物理一分为二，自动裂变为多个独立块。',
+            'msg_err_grid': '请点击已有图片旁边的格子提取参考图！', 'msg_need_base': '请先上传中心 4K 基础地图！',
+            'msg_sel_chunk': '已选中 [KEY] 区块', 'msg_mode_roam': '漫游模式：可抓取地图，点击虚线框十字提取扩图边缘',
+            'msg_mode_cut': '✂️ 切除(变红)：使用套索框选或【点选】孤岛，选中的区域会被精确变为红色丢弃区。',
+            'msg_mode_merge': '🔗 保留(变绿)：框住的红区会被同化，碰到绿岛会完整吸附！支持套索与【点选】。',
+            'msg_mode_draw': '物理区绘制：无视地图边界自由划定游戏逻辑区域。悬停已画区域中心可显示红点删除。',
+            'msg_need_base2': '请先上传基础 4K 图像！', 'msg_clk_red': '✂️ 点击生效！该孤岛已标记为【红色剔除】',
+            'msg_clk_green': '🔗 点击生效！该孤岛已标记为【绿色保留】', 'msg_err_empty': '地图是空的！',
+            'msg_pack': '正在打包图像及碰撞数据，请稍候...', 'msg_exp_succ': '导出成功！JSON中已包含所有独立透明PNG及世界绝对坐标！',
+            'draw_upload': '⏳ 点击上传 AI 扩图', 'draw_ext': '➕ 提取边缘',
+            
+            'ai_prompt_1': '生成一个 顶视图，开放像素宽高4096的地图，仙侠世界类型的。城镇图。要 像素画风的。高清大图。不要边框不要任何说明文字。只生成图片本身。要高清大图。 不要显示任何人，不要显示任何天空和云朵。建筑物不要太密集 不要太小。',
+            'ai_prompt_1_msg': '【首图生成提示词】已尝试复制！\n如果剪贴板没生效，请手动复制下方内容发给AI：',
+            'ai_prompt_2': '移除所有地板，不管草地还是道路，只要能走的区域全部替换成同一种纯粹的纯色背景。保留完整的建筑主体，不要改动建筑内部样式。',
+            'ai_prompt_2_msg': '边缘参考图已下载！\n【建筑层提取提示词】已优化并自动复制到剪贴板！\n如果没有复制成功，请手动复制下方内容发给AI：'
+        },
+        'en': {
+            'ui_local_proj': '📁 Local Project', 'title_proj_list': 'Select a saved project', 'ui_load_map': '📂 Load Map',
+            'ui_delete': '🗑️ Delete', 'title_proj_name': 'Project Name', 'title_proj_ph': 'Enter project name',
+            'ui_save': '💾 Save / Save As', 'ui_base_layer': '🌍 Base Map Layer', 'ui_select_first': '➕ Select First (4K)',
+            'title_btn_replace': 'Replace the base map of the selected grid', 'ui_replace_sel': '🔄 Replace Selected',
+            'ui_build_layer': '✨ Building Layer', 'ui_smart_ext': '🔮 Smart Extract Islands',
+            'ui_export_godot': '📦 Export Godot ZIP', 'ui_basic_int': '👆 Basic Interaction',
+            'ui_roam': '🖐️ Roam / Select Expand', 'ui_entity_trim': '✂️ Entity Trim',
+            'title_btn_cut': 'Target area will be extracted as a red island', 'ui_cut_red': '✂️ Red (Discard)',
+            'title_btn_merge': 'Target area will be packed as a green island', 'ui_merge_green': '🔗 Green (Merge)',
+            'title_chk_smart': 'When enabled: In green mode, touching a green island snaps the entire island; red parts only do precise pixel cutting.',
+            'ui_smart_merge': 'Smart Island Snap', 'ui_logic_area': '🛑 Logic Area Setup',
+            'ui_draw_col': '🟥 Draw Blocked', 'ui_draw_occ': '🟦 Draw Occlusion', 'ui_draw_fg': '🟨 Draw Foreground',
+            'ui_brush_shape': '📐 Brush Shape', 'opt_click': '🖱️ Click Toggle (Red/Green State)',
+            'opt_poly': '📌 Polygon Lasso (Close to apply)', 'opt_rect': '🔲 Rect Lasso (Drag & Release)',
+            'opt_free': '〰️ Freehand Knife (Drag to cut islands)', 'ui_undo': '↩️ Undo', 'title_debug': 'Edge reference for AI',
+            
+            'msg_ready': 'Ready | Hover physics area to delete | Right-click roam | Scroll zoom',
+            'msg_db_fail': 'Local DB init failed, saving might be unavailable.', 'msg_enter_name': 'Please enter a project name!',
+            'msg_saving': 'Saving project to local cache...', 'msg_save_succ': 'Project [NAME] saved successfully!',
+            'msg_loading': 'Loading project [NAME], rebuilding memory atlas...', 'msg_load_succ': 'Project [NAME] loaded successfully! Fully restored.',
+            'msg_del_conf': 'Are you sure you want to permanently delete project [NAME]?', 'msg_del_succ': 'Project [NAME] completely deleted.',
+            'msg_undo': 'Undid one MODE area', 'msg_auto_crop': 'Auto-cropped overlap and joined seamlessly!',
+            'msg_bg_replaced': 'Background replaced', 'msg_analyze': 'Analyzing background, executing smart healing & extraction...',
+            'msg_no_build': 'No valid building detected.', 'msg_ext_succ': 'Perfect! Auto-extracted into NUM green islands!',
+            'msg_merge_succ': '🔗 Box merge applied! Fused into [Green Keep Island]', 'msg_merge_smart': ' (Triggered full island snap)',
+            'msg_merge_pixel': ' (Pixels only)', 'msg_cut_succ': '✂️ Box cut applied! Split into [Red Discard Island].',
+            'msg_line_cut': '〰️ Line cut applied! Entity physically split into independent blocks.',
+            'msg_err_grid': 'Please click an empty grid next to an existing image to extract reference!', 'msg_need_base': 'Please upload center 4K base map first!',
+            'msg_sel_chunk': 'Selected chunk [KEY]', 'msg_mode_roam': 'Roam mode: Drag map, click dashed cross to extract expansion edge',
+            'msg_mode_cut': '✂️ Cut (Red): Lasso or [Click] island to precisely discard area.',
+            'msg_mode_merge': '🔗 Keep (Green): Lasso or [Click] to assimilate red areas and snap green islands!',
+            'msg_mode_draw': 'Physics draw: Free draw game logic areas. Hover center of drawn area to delete.',
+            'msg_need_base2': 'Please upload 4K base image first!', 'msg_clk_red': '✂️ Click applied! Island marked as [Red Discard]',
+            'msg_clk_green': '🔗 Click applied! Island marked as [Green Keep]', 'msg_err_empty': 'The map is empty!',
+            'msg_pack': 'Packing images and collision data, please wait...', 'msg_exp_succ': 'Export successful! JSON includes all transparent PNGs & world coordinates!',
+            'draw_upload': '⏳ Click to upload AI Expand', 'draw_ext': '➕ Extract Edge',
+            
+            'ai_prompt_1': 'Generate a top-view, 4096px open map, Xianxia/Fantasy world type. Town map. Pixel art style. High-res large image. No borders, no text. Image only. High resolution. No people, no sky/clouds. Buildings shouldn\'t be too dense or too small.',
+            'ai_prompt_1_msg': '[First Image Prompt] copied!\nIf clipboard failed, manually copy the text below for AI:',
+            'ai_prompt_2': 'Remove all floors, whether grass or roads, replace all walkable areas with the exact same solid pure background color. Keep the building main bodies intact, do not alter internal building styles.',
+            'ai_prompt_2_msg': 'Edge reference downloaded!\n[Building Layer Prompt] optimized and copied to clipboard!\nIf it failed, manually copy the text below for AI:'
+        }
+    };
+    
+    function t(key, vars={}) {
+        let text = i18n[currentLang][key] || key;
+        for(let k in vars) { text = text.replace(k, vars[k]); }
+        return text;
+    }
+    
+    function toggleLang() {
+        currentLang = currentLang === 'zh' ? 'en' : 'zh';
+        document.getElementById('btn-lang-toggle').innerText = currentLang === 'zh' ? '🌐 English' : '🌐 中文';
+        
+        document.querySelectorAll('[data-i18n]').forEach(el => el.innerText = t(el.getAttribute('data-i18n')));
+        document.querySelectorAll('[data-title-i18n]').forEach(el => el.title = t(el.getAttribute('data-title-i18n')));
+        document.querySelectorAll('[data-ph-i18n]').forEach(el => el.placeholder = t(el.getAttribute('data-ph-i18n')));
+        
+        // 智能替换默认的项目名称
+        let pInput = document.getElementById('project-name');
+        if(pInput.value === '新地图' && currentLang === 'en') pInput.value = 'New Map';
+        else if(pInput.value === 'New Map' && currentLang === 'zh') pInput.value = '新地图';
+
+        updateUI(); draw();
+    }
     
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     window.addEventListener('resize', () => { resizeCanvas(); draw(); });
@@ -211,9 +332,9 @@
     }
 
     function triggerUploadBg() {
-        const txt = "生成一个 顶视图，开放像素宽高4096的地图，仙侠世界类型的。城镇图。要 像素画风的。高清大图。不要边框不要任何说明文字。只生成图片本身。要高清大图。 不要显示任何人，不要显示任何天空和云朵。建筑物不要太密集 不要太小。";
+        const txt = t('ai_prompt_1');
         fallbackCopy(txt);
-        prompt("【首图生成提示词】已尝试复制！\n如果剪贴板没生效，请手动复制下方内容发给AI：", txt);
+        prompt(t('ai_prompt_1_msg'), txt);
         document.getElementById('upload-img').click();
     }
 
@@ -236,10 +357,10 @@
     window.onload = () => {
         initDB().then(() => {
             updateProjectList();
-            setStatus("就绪 | 悬浮物理区可单删 | 右键漫游 | 滚轮无极缩放");
+            setStatus(t('msg_ready'));
         }).catch(e => {
             console.error(e);
-            setStatus("本地数据库初始化失败，保存功能可能不可用。");
+            setStatus(t('msg_db_fail'));
         });
     };
 
@@ -259,9 +380,9 @@
 
     async function saveCurrentProject() {
         const pName = document.getElementById('project-name').value.trim();
-        if(!pName) return alert('请输入项目名称！');
+        if(!pName) return alert(t('msg_enter_name'));
         
-        setStatus("正在极速保存项目到本地缓存...");
+        setStatus(t('msg_saving'));
         const data = { name: pName, timestamp: Date.now(), cameraX, cameraY, scale, globalShapes, chunks: {} };
         
         for(let key in chunks) {
@@ -279,14 +400,14 @@
 
         const transaction = db.transaction([storeName], "readwrite");
         const store = transaction.objectStore(storeName); store.put(data);
-        transaction.oncomplete = () => { setStatus(`项目 [${pName}] 保存成功！`); updateProjectList(); };
+        transaction.oncomplete = () => { setStatus(t('msg_save_succ', {'NAME': pName})); updateProjectList(); };
     }
 
     async function loadSelectedProject() {
         const select = document.getElementById('project-list'); const pName = select.value;
         if(!pName) return;
         
-        setStatus(`正在读取项目 [${pName}]，正在重建内存图集...`);
+        setStatus(t('msg_loading', {'NAME': pName}));
         const transaction = db.transaction([storeName], "readonly");
         const store = transaction.objectStore(storeName); const request = store.get(pName);
         
@@ -319,16 +440,16 @@
                 chunks[key] = sc;
             }
             selectedChunkKey = null; targetUploadChunk = null; updateUI(); draw();
-            setStatus(`项目 [${pName}] 读取成功！已完全恢复。`);
+            setStatus(t('msg_load_succ', {'NAME': pName}));
         };
     }
 
     function deleteSelectedProject() {
         const pName = document.getElementById('project-list').value; if(!pName) return;
-        if(!confirm(`确定要永久删除项目 [${pName}] 吗？`)) return;
+        if(!confirm(t('msg_del_conf', {'NAME': pName}))) return;
         const transaction = db.transaction([storeName], "readwrite");
         const store = transaction.objectStore(storeName); store.delete(pName);
-        transaction.oncomplete = () => { setStatus(`项目 [${pName}] 已彻底删除。`); updateProjectList(); };
+        transaction.oncomplete = () => { setStatus(t('msg_del_succ', {'NAME': pName})); updateProjectList(); };
     }
 
     function getWorldPos(screenX, screenY) { return { x: (screenX - cameraX) / scale, y: (screenY - cameraY) / scale }; }
@@ -349,7 +470,7 @@
     function undoShape() {
         if (['col', 'occ', 'fg'].includes(mode) && globalShapes[mode].length > 0) {
             globalShapes[mode].pop(); hoveredPolygon = null; draw();
-            setStatus(`已撤销一个 ${mode} 区域`);
+            setStatus(t('msg_undo', {'MODE': mode}));
         }
     }
 
@@ -398,7 +519,7 @@
                 cropL: cropL, cropT: cropT, cropW: cropW, cropH: cropH, buildings: [] 
             };
             selectedChunkKey = targetUploadChunk; 
-            e.target.value = ''; updateUI(); setStatus("已自动裁去重复边缘并完美对接，无缝隙！"); draw();
+            e.target.value = ''; updateUI(); setStatus(t('msg_auto_crop')); draw();
         });
     });
 
@@ -451,11 +572,10 @@
         (fullImg, croppedImg, dataURL, cropW, cropH, fullDataURL) => {
             c.fullImage = fullImg; c.croppedImage = croppedImg; 
             c.dataURL = dataURL; c.fullDataURL = fullDataURL;
-            e.target.value = ''; draw(); setStatus("背景已替换");
+            e.target.value = ''; draw(); setStatus(t('msg_bg_replaced'));
         });
     });
 
-    // 智能连通域提取，支持膨胀愈合（解决碎块）与原样提取
     function extractBlobs(w, h, hitData, dilateAmt = 0) {
         let baseHit = hitData;
         if (dilateAmt > 0) {
@@ -480,7 +600,6 @@
         for (let y = 0; y < h; y++) {
             for (let x = 0; x < w; x++) {
                 let idx = y * w + x;
-                // 注意：即使利用膨胀结果寻路，最终也只收入真实有像素的点
                 if (baseHit[idx] && !visited[idx] && hitData[idx]) {
                     let q = [idx]; visited[idx] = 1; let head = 0;
                     while(head < q.length) {
@@ -515,7 +634,6 @@
         return blobs;
     }
 
-    // 辅助函数：利用孤岛像素对象创建新的建筑实体
     function createBuildingFromBlob(blob, originalImgData, fullW, fullH, islandType, overrideLocalX, overrideLocalY) {
         let pad = 6;
         let rx = Math.max(0, blob.minX - pad), ry = Math.max(0, blob.minY - pad);
@@ -562,11 +680,10 @@
         return result;
     }
 
-    // 第一步上传：智能识别底色 + 形态愈合 + 内部透空
     document.getElementById('upload-building-img').addEventListener('change', function(e) {
         if (!selectedChunkKey || !e.target.files[0]) return;
         const file = e.target.files[0]; 
-        setStatus("正在自动分析图像底色，执行智能形态愈合与轮廓提取...");
+        setStatus(t('msg_analyze'));
         
         const reader = new FileReader();
         reader.onload = function(event) {
@@ -604,9 +721,8 @@
                         if (dist > tol && data[i+3] > 20) isSolid[i/4] = 1;
                     }
 
-                    // 初始提取使用膨胀(dilate=3)，防止建筑碎成渣
                     const blobs = extractBlobs(w, h, isSolid, 3);
-                    if (blobs.length === 0) { e.target.value = ''; setStatus("未能识别到有效建筑。"); updateUI(); draw(); return; }
+                    if (blobs.length === 0) { e.target.value = ''; setStatus(t('msg_no_build')); updateUI(); draw(); return; }
 
                     blobs.forEach(b => {
                         chunk.buildings.push(createBuildingFromBlob(b, imgData, w, h, 'keep', null, null));
@@ -616,7 +732,7 @@
                         let allComplete = chunk.buildings.every(b => b.image.complete && b.outlineImage.complete);
                         if (allComplete) {
                             clearInterval(checkAllLoaded);
-                            e.target.value = ''; setStatus(`完美！自动识别底色，连通实体已独立分离为 ${chunk.buildings.length} 个绿色孤岛！`); 
+                            e.target.value = ''; setStatus(t('msg_ext_succ', {'NUM': chunk.buildings.length})); 
                             updateUI(); draw();
                         }
                     }, 50);
@@ -628,9 +744,6 @@
         reader.readAsDataURL(file); 
     });
 
-    // ==========================================
-    // 💡 混合套索切割：【像素切除】 + 【绿岛整体吸附】
-    // ==========================================
     function executeAreaOperation(points, targetIslandType) {
         let processedCount = 0;
         let bbMinX = Math.min(...points.map(p => p[0])), bbMaxX = Math.max(...points.map(p => p[0]));
@@ -647,7 +760,6 @@
                 let b = chunk.buildings[i]; let bGlobalX = chunk.drawX + b.localX, bGlobalY = chunk.drawY + b.localY;
                 if (bbMaxX < bGlobalX || bbMinX > bGlobalX + b.width || bbMaxY < bGlobalY || bbMinY > bGlobalY + b.height) continue;
 
-                // 创建选区遮罩
                 const maskCanvas = document.createElement('canvas'); maskCanvas.width = b.width; maskCanvas.height = b.height;
                 const maskCtx = maskCanvas.getContext('2d');
                 maskCtx.beginPath();
@@ -655,7 +767,6 @@
                 for(let k=1; k<points.length; k++) maskCtx.lineTo(points[k][0] - bGlobalX, points[k][1] - bGlobalY);
                 maskCtx.closePath(); maskCtx.fill(); 
 
-                // 测试是否发生碰撞
                 const inCanvas = document.createElement('canvas'); inCanvas.width = b.width; inCanvas.height = b.height;
                 const inCtx = inCanvas.getContext('2d'); inCtx.drawImage(b.image, 0, 0);
                 inCtx.globalCompositeOperation = 'destination-in';
@@ -665,18 +776,15 @@
                 let hitAnyIn = false;
                 for(let j=0; j<b.width*b.height; j++) { if (inImgData.data[j*4+3] > 20) { hitAnyIn = true; break; } }
 
-                if (!hitAnyIn) continue; // 没有任何像素交集，直接跳过
+                if (!hitAnyIn) continue; 
 
-                chunk.buildings.splice(i, 1); // 有交集，将其从原列表中摘出处理
+                chunk.buildings.splice(i, 1); 
 
-                // 【核心吸附逻辑】如果是变绿模式，且被碰到的是一个完整的绿岛，并且开启了智能吸附
                 if (isSmartMerge && targetIslandType === 'keep' && b.islandType === 'keep') {
-                    // 我们不切它！我们把整个绿岛完整的吸附进合并大军里！
                     const fullCanvas = document.createElement('canvas'); fullCanvas.width = b.width; fullCanvas.height = b.height;
                     fullCanvas.getContext('2d').drawImage(b.image, 0, 0);
                     insidePieces.push({ canvas: fullCanvas, globalX: bGlobalX, globalY: bGlobalY, width: b.width, height: b.height });
                 } else {
-                    // 【常规切割逻辑】切除选区外多余部分，并将框内像素加入处理序列。
                     const outCanvas = document.createElement('canvas'); outCanvas.width = b.width; outCanvas.height = b.height;
                     const outCtx = outCanvas.getContext('2d'); outCtx.drawImage(b.image, 0, 0);
                     outCtx.globalCompositeOperation = 'destination-out';
@@ -687,18 +795,15 @@
                     let hitAnyOut = false;
                     for(let j=0; j<b.width*b.height; j++) { if (outImgData.data[j*4+3] > 20) { outHitData[j] = 1; hitAnyOut = true; } }
 
-                    // 框外的像素保持原颜色、原状态，裂变重组
                     if (hitAnyOut) {
                         let blobs = extractBlobs(b.width, b.height, outHitData, 0); 
                         blobs.forEach(blob => { chunk.buildings.push(createBuildingFromBlob(blob, outImgData, b.width, b.height, b.islandType, b.localX, b.localY)); });
                     }
                     
-                    // 框内的像素加入合并大军！(这实现了切下红色一部分的功能)
                     insidePieces.push({ canvas: inCanvas, globalX: bGlobalX, globalY: bGlobalY, width: b.width, height: b.height });
                 }
             }
 
-            // 将所有被网住的像素（或被完整吸附的绿岛）拼合在一起！
             if (insidePieces.length > 0) {
                 let minGX = Math.min(...insidePieces.map(p => p.globalX));
                 let minGY = Math.min(...insidePieces.map(p => p.globalY));
@@ -726,14 +831,11 @@
         }
         
         if (processedCount > 0) {
-            if (targetIslandType === 'keep') setStatus(`🔗 框选合并生效！已完美融合为【绿色保留孤岛】` + (isSmartMerge ? ` (触发完整绿岛吸附)` : ` (仅切割像素)`));
-            else setStatus(`✂️ 框选切除生效！框内像素已切下并独立为【红色剔除孤岛】。`);
+            if (targetIslandType === 'keep') setStatus(t('msg_merge_succ') + (isSmartMerge ? t('msg_merge_smart') : t('msg_merge_pixel')));
+            else setStatus(t('msg_cut_succ'));
         }
     }
 
-    // ==========================================
-    // ✂️ 划线刀切除（非闭合线）：一把无情的橡皮擦，物理切断像素分离孤岛
-    // ==========================================
     function executeLineCut(points) {
         let slicedCount = 0;
         let bbMinX = Math.min(...points.map(p => p[0])), bbMaxX = Math.max(...points.map(p => p[0]));
@@ -749,7 +851,6 @@
                 const outCanvas = document.createElement('canvas'); outCanvas.width = b.width; outCanvas.height = b.height;
                 const outCtx = outCanvas.getContext('2d'); outCtx.drawImage(b.image, 0, 0);
 
-                // 使用画线作为橡皮擦，物理切开像素
                 outCtx.globalCompositeOperation = 'destination-out';
                 outCtx.beginPath();
                 outCtx.moveTo(points[0][0] - bGlobalX, points[0][1] - bGlobalY);
@@ -779,16 +880,15 @@
                 }
             }
         }
-        if (slicedCount > 0) setStatus(`〰️ 划线切割生效！实体已沿线条被物理一分为二，自动裂变为多个独立块。`);
+        if (slicedCount > 0) setStatus(t('msg_line_cut'));
     }
 
-    // 下载边界参考图给AI
     function downloadEdgeForAI(gx, gy) {
         const leftN = chunks[`${gx - 1}_${gy}`], rightN = chunks[`${gx + 1}_${gy}`];
         const topN = chunks[`${gx}_${gy - 1}`], bottomN = chunks[`${gx}_${gy + 1}`];
 
         if ((!leftN || leftN.isPending) && (!rightN || rightN.isPending) && (!topN || topN.isPending) && (!bottomN || bottomN.isPending)) {
-            return alert("请点击已有图片旁边的格子提取参考图！");
+            return alert(t('msg_err_grid'));
         }
         
         const edgeCanvas = document.createElement('canvas');
@@ -808,9 +908,9 @@
         chunks[`${gx}_${gy}`] = { isPending: true, baseX: gx * STRIDE, baseY: gy * STRIDE }; 
         updateUI(); draw();
 
-        const txt = "移除所有地板，不管草地还是道路，只要能走的区域全部替换成同一种纯粹的纯色背景。保留完整的建筑主体，不要改动建筑内部样式。";
+        const txt = t('ai_prompt_2');
         fallbackCopy(txt);
-        setTimeout(() => { prompt("边缘参考图已下载！\n【建筑层提取提示词】已优化并自动复制到剪贴板！\n如果没有复制成功，请手动复制下方内容发给AI：", txt); }, 100);
+        setTimeout(() => { prompt(t('ai_prompt_2_msg'), txt); }, 100);
     }
 
     function setStatus(msg) { document.getElementById('status-bar').innerText = msg; }
@@ -830,11 +930,11 @@
         document.getElementById('btn-replace').disabled = !canAction;
         document.getElementById('btn-add-buildings').disabled = !canAction;
         
-        if (Object.keys(chunks).length === 0) setStatus("请先上传中心 4K 基础地图！");
-        else if (mode === 'expand') setStatus(canAction ? `已选中 [${selectedChunkKey}] 区块` : `漫游模式：可抓取地图，点击虚线框十字提取扩图边缘`);
-        else if (mode === 'cut') setStatus(`✂️ 切除(变红)：使用套索框选或【点选】孤岛，选中的区域会被精确变为红色丢弃区。`);
-        else if (mode === 'merge') setStatus(`🔗 保留(变绿)：框住的红区会被同化，碰到绿岛会完整吸附！支持套索与【点选】。`);
-        else setStatus(`物理区绘制：无视地图边界自由划定游戏逻辑区域。悬停已画区域中心可显示红点删除。`);
+        if (Object.keys(chunks).length === 0) setStatus(t('msg_need_base'));
+        else if (mode === 'expand') setStatus(canAction ? t('msg_sel_chunk', {'KEY': selectedChunkKey}) : t('msg_mode_roam'));
+        else if (mode === 'cut') setStatus(t('msg_mode_cut'));
+        else if (mode === 'merge') setStatus(t('msg_mode_merge'));
+        else setStatus(t('msg_mode_draw'));
     }
 
     function getClickedObject(wx, wy) {
@@ -853,13 +953,9 @@
         return null;
     }
 
-    // ==============================
-    // 鼠标输入检测与分发
-    // ==============================
     canvas.addEventListener('mousedown', (e) => {
         if (e.button === 2) { isDragging = true; lastX = e.clientX; lastY = e.clientY; return; }
         if (e.button === 0) { 
-            // 避开全新多排工具栏的区域高度，防误触
             if (e.clientY < 110) return; 
             const worldPos = getWorldPos(e.clientX, e.clientY);
 
@@ -870,7 +966,7 @@
                     hoveredPolygon = null; isHoveringDeleteBtn = false; canvas.style.cursor = 'crosshair'; draw(); return; 
                 }
             }
-            if (Object.keys(chunks).length === 0) return alert("请先上传基础 4K 图像！");
+            if (Object.keys(chunks).length === 0) return alert(t('msg_need_base2'));
 
             if (mode === 'expand') {
                 const clicked = getClickedObject(worldPos.x, worldPos.y);
@@ -917,7 +1013,7 @@
                                 clickedB.outlineImage.src = clickedB.outlineDataURL;
                                 clickedB.islandType = targetType;
                                 
-                                setStatus(targetType === 'discard' ? "✂️ 点击生效！该孤岛已标记为【红色剔除】" : "🔗 点击生效！该孤岛已标记为【绿色保留】");
+                                setStatus(targetType === 'discard' ? t('msg_clk_red') : t('msg_clk_green'));
                             }
                         }
                     }
@@ -987,7 +1083,6 @@
                 }
             }
 
-            // 更新点选鼠标样式
             let cursorStyle = 'crosshair';
             if (isHoveringDeleteBtn) cursorStyle = 'pointer';
             else if (shapeTool === 'click' && ['cut', 'merge'].includes(mode) && hoveredBuilding) cursorStyle = 'pointer';
@@ -1024,7 +1119,7 @@
     canvas.addEventListener('contextmenu', e => e.preventDefault());
 
     async function exportGodotZip() {
-        if (Object.keys(chunks).length === 0) return alert("地图是空的！");
+        if (Object.keys(chunks).length === 0) return alert(t('msg_err_empty'));
         const zip = new JSZip();
         
         const exportJSON = { map_version: "FINAL_PERFECT", chunks: [], global_polygons: globalShapes };
@@ -1066,10 +1161,10 @@
         }
         
         zip.file("map_data.json", JSON.stringify(exportJSON, null, 2));
-        setStatus("正在打包图像及碰撞数据，请稍候...");
+        setStatus(t('msg_pack'));
         const blob = await zip.generateAsync({type: "blob"});
         const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = "Godot_Perfect_Map.zip"; link.click();
-        URL.revokeObjectURL(link.href); setStatus("导出成功！JSON中已包含所有独立透明PNG及世界绝对坐标！");
+        URL.revokeObjectURL(link.href); setStatus(t('msg_exp_succ'));
     }
 
     function draw() {
@@ -1087,7 +1182,7 @@
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.lineWidth = 4 / scale; ctx.setLineDash([20/scale, 20/scale]);
                 ctx.strokeRect(chunk.baseX + 10, chunk.baseY + 10, CHUNK_SIZE - 20, CHUNK_SIZE - 20); ctx.setLineDash([]);
                 ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.font = `120px sans-serif`; ctx.textAlign = 'center';
-                ctx.fillText("⏳ 点击上传 AI 扩图", chunk.baseX + CHUNK_SIZE/2, chunk.baseY + CHUNK_SIZE/2); ctx.textAlign = 'left';
+                ctx.fillText(t('draw_upload'), chunk.baseX + CHUNK_SIZE/2, chunk.baseY + CHUNK_SIZE/2); ctx.textAlign = 'left';
             } else {
                 if (chunk.drawX + chunk.cropW < startX || chunk.drawX > endX || chunk.drawY + chunk.cropH < startY || chunk.drawY > endY) continue;
                 ctx.drawImage(chunk.croppedImage, chunk.drawX, chunk.drawY, chunk.cropW, chunk.cropH);
@@ -1112,7 +1207,7 @@
                 ctx.strokeStyle = 'rgba(0, 255, 204, 0.2)'; ctx.lineWidth = 4 / scale; ctx.setLineDash([20/scale, 20/scale]);
                 ctx.strokeRect(bx, by, CHUNK_SIZE, CHUNK_SIZE); ctx.setLineDash([]);
                 ctx.fillStyle = 'rgba(0, 255, 204, 0.5)'; ctx.font = `150px sans-serif`; ctx.textAlign = 'center';
-                ctx.fillText("➕ 提取边缘", bx + CHUNK_SIZE/2, by + CHUNK_SIZE/2); ctx.textAlign = 'left';
+                ctx.fillText(t('draw_ext'), bx + CHUNK_SIZE/2, by + CHUNK_SIZE/2); ctx.textAlign = 'left';
             }
         }
 
