@@ -4,7 +4,7 @@
 [![HTML5](https://img.shields.io/badge/Platform-Web%20Browser-e34f26?logo=html5&logoColor=white)]()
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-*Read this in other languages: [简体中文](README.md)*
+*Read this in other languages: [简体中文](README.zh-cn.md)*
 
 A 4K seamless map splicing and asset editor explicitly designed for 2D games, especially pixel art and fantasy RPG worlds.
 
