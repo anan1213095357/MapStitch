@@ -4,51 +4,53 @@
 [![HTML5](https://img.shields.io/badge/Platform-Web%20Browser-e34f26?logo=html5&logoColor=white)]()
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-一个专为 2D 游戏（特别是像素风/仙侠世界）设计的 4K 大地图无缝拼接与资产编辑器。
+*Read this in other languages: [简体中文](README.md)*
+
+A 4K seamless map splicing and asset editor explicitly designed for 2D games, especially pixel art and fantasy RPG worlds.
 
 <img width="3008" height="1958" alt="MapStitch Preview 1" src="https://github.com/user-attachments/assets/15ff1ae3-aba1-405f-b40a-4ae2e6e38233" />
 <img width="3021" height="1965" alt="MapStitch Preview 2" src="https://github.com/user-attachments/assets/888d3f1f-41ac-49da-addc-48f032484238" />
 
-彻底告别繁琐的 PS 切图与手动对齐！MapStitch 运行在纯 Web 端，支持智能底色识别（不限纯黑）、多边形建筑掏空/缝合、物理掩码绘制，并可一键导出适配 Godot 4.x 的绝对坐标 JSON 与独立透明 PNG 切片，为您打通从 AI 绘图到游戏引擎的最后一步。
+Say goodbye to tedious manual alignment in Photoshop! MapStitch is a pure web-based tool featuring intelligent background color recognition (not limited to pure black), polygon-based building hollowing/merging, and physical mask painting. It exports Godot 4.x ready absolute-coordinate JSONs and individual transparent PNG slices with a single click—bridging the final gap between AI image generation and game engines.
 
-## 📖 核心工作流 (Workflow)
+## 📖 Core Workflow
 
-为了最大化发挥本工具的效能，推荐使用以下标准 AI 辅助工作流：
+To maximize the potential of this tool, we recommend the following AI-assisted workflow:
 
-1. **底图生成**：利用 AI 生成一张 `4096 x 4096` 分辨率的 2D 俯视像素大图，并上传至 MapStitch 作为初始区块。
-2. **建筑分离**：将原图重新发给 AI（或使用图像编辑软件手动抠图），移除所有地板材质，将背景替换为**任意纯色**，保留完整的建筑/物品主体。
-3. **空间编辑**：将处理好的纯色底图片重新上传。MapStitch 会自动剔除底色并提取建筑实体。你可以利用多边形工具掏空、缝合建筑，并绘制精准的遮挡与碰撞掩码。
-4. **无缝扩建**：点击地图侧边的 `➕` 号，工具将提取完美对齐的边缘参考图。将参考图发给 AI 进行局部重绘，再将新图上传，如此往复即可拼接出无限广阔的超级大地图。
+1. **Base Map Generation**: Use AI to generate a top-down `4096 x 4096` 2D map and upload it to MapStitch as your starting chunk.
+2. **Asset Extraction**: Feed the original image back to the AI (or use image editing software) to remove all ground textures/paths and replace the background with **any pure color**, leaving only the buildings and objects intact.
+3. **Spatial Editing**: Upload the solid-background image. MapStitch will automatically key out the background and extract the building entities. You can then use polygon tools to hollow out or merge structures and paint precise occlusion/collision masks.
+4. **Seamless Expansion**: Click the `➕` icon on the edges of the grid. The tool will generate perfectly aligned edge reference images. Feed these to the AI for outpainting, upload the new generated chunks, and repeat the process to build a massive, infinite map.
 
-## ✨ 核心特性
+## ✨ Features
 
-- 🧩 **4K 无缝矩阵拼接**：自动裁切相邻图像的重叠边缘，保证 4K 大地图区块间 100% 像素级对齐，无限延伸大世界画布。
-- 🧠 **智能背景分离（任意纯色）**：无需强制要求纯黑底！内置动态底色识别算法，精准提取建筑实体，自动完成边缘形态愈合与透空处理。
-- ✂️ **多边形拓扑编辑**：提供拉线与框选工具。闭合后可一键「掏空」建筑内部多余部分，或将多个细碎部件「缝合」为单一渲染层。
-- 🎨 **多层掩码绘制**：内置可视化画笔，自由绘制 **禁足区(红)**、**遮挡区(蓝)** 与 **前景层(黄)**。
-- 📦 **Godot 原生对接**：一键导出 ZIP 数据包，内含所有独立透明 PNG 切片及全局绝对坐标 `map_data.json`。
-- 💾 **本地离线缓存**：基于纯前端架构，数据毫秒级自动保存至浏览器 IndexedDB，断网可用，极致流畅。
+- 🧩 **4K Seamless Matrix Splicing**: Automatically crops overlapping edges of adjacent images to ensure 100% pixel-perfect alignment between chunks.
+- 🧠 **Smart Background Separation (Any Solid Color)**: Dynamically analyzes and keys out any solid background color to precisely extract buildings while automatically healing edges and applying transparency.
+- ✂️ **Polygon Topology Editing**: Draw or box-select areas to "hollow out" unwanted internal parts of a building, or "stitch" fragmented pieces into a single render layer.
+- 🎨 **Multi-Layer Mask Painting**: Built-in visual brushes allow you to freely draw **Collision zones (Red)**, **Occlusion zones (Blue)**, and **Foreground layers (Yellow)**.
+- 📦 **Native Godot Pipeline**: Export a ZIP package containing all transparent PNG slices and a `map_data.json` with global absolute coordinates.
+- 💾 **Local Offline Caching**: Pure frontend architecture utilizes IndexedDB. Assets are saved locally in milliseconds, ensuring a smooth, privacy-safe, offline-capable experience.
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-本项目为纯前端单文件（Single-file）应用，无需安装任何依赖或构建工具。
+This project is a single-file application requiring no Node.js dependencies or build tools.
 
-1. 克隆或下载本仓库至本地。
-2. 在浏览器中直接双击打开 `index.html`。
-3. 点击 **「上传 4K 背景」** 开始你的地图构建。
-4. **Godot 引擎集成**：将 ZIP 导出包解压至项目目录，在主场景中挂载 `MapChunkManager.cs` 脚本，并将 `Map Data Path` 指向 `map_data.json` 即可自动生成地图与碰撞。
+1. Clone or download this repository.
+2. Double-click `index.html` to open it in your browser.
+3. Click **"Upload 4K Background" (上传 4K 背景)** to start building your map.
+4. **Godot Integration**: Extract the exported ZIP package into your Godot project. Attach the `MapChunkManager.cs` script to your main scene and set the `Map Data Path` to the extracted `map_data.json`.
 
-## 🕹️ 基本操作指南
+## 🕹️ Controls
 
-- **漫游与缩放**：按住 `鼠标右键` 拖动画面，`鼠标滚轮` 无极缩放。
-- **区块提取**：点击空白网格上的 `➕` 号，下载用于 AI 重绘的边缘参考图。
-- **建筑上传**：选中已有区块后，点击「上传纯色底建筑」，系统将自动分离建筑本体。
-- **切割与合并**：切换至对应模式，拉线或框选建筑，闭合图形（多边形需点回起点）即刻生效。
-- **撤销操作**：使用 `Ctrl + Z` 撤销刚刚画错的掩码或选区。
+- **Pan & Zoom**: `Right-click + Drag` to pan the camera; `Mouse Wheel` for infinite zoom.
+- **Extract Chunk Edges**: Click the `➕` on empty grids to download edge reference images for AI outpainting.
+- **Upload Buildings**: Select an existing chunk, click "Upload Building (上传纯色底建筑)" to auto-extract assets from a solid background image.
+- **Cut & Merge**: Switch to the corresponding mode, draw or select over buildings, and close the shape (click the starting point for polygons) to apply instantly.
+- **Undo**: Press `Ctrl + Z` to undo the last drawn mask or selection.
 
-## 📂 导出数据结构 (Godot JSON)
+## 📂 Exported Data Structure (Godot JSON)
 
-导出的 ZIP 包中包含 `map_data.json`，在 Godot 中可直接反序列化解析：
+The exported ZIP includes a `map_data.json` formatted for easy deserialization in Godot:
 
 ```json
 {
@@ -74,8 +76,8 @@
     }
   ],
   "global_polygons": {
-    "col": [[[x,y], ...]], // 禁足碰撞区 / Collision
-    "occ": [[[x,y], ...]], // 遮挡区 / Occlusion
-    "fg":  [[[x,y], ...]]  // 前景层 / Foreground
+    "col": [[[x,y], ...]], // Collision mask
+    "occ": [[[x,y], ...]], // Occlusion mask
+    "fg":  [[[x,y], ...]]  // Foreground layer
   }
 }
