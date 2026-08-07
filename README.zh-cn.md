@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 一个专为 2D 游戏（特别是像素风/仙侠世界）设计的 4K 大地图无缝拼接与资产编辑器。
+*Read this in other languages: [English](README.md)*
 
 <img width="3008" height="1958" alt="MapStitch Preview 1" src="https://github.com/user-attachments/assets/15ff1ae3-aba1-405f-b40a-4ae2e6e38233" />
 <img width="3021" height="1965" alt="MapStitch Preview 2" src="https://github.com/user-attachments/assets/888d3f1f-41ac-49da-addc-48f032484238" />
