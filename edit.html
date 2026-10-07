@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>MapStitch 4K 无缝地图编辑器</title>
+    <title>MapStitch 无缝地图编辑器</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         body { margin: 0; overflow: hidden; background: #151515; color: #eee; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
@@ -95,7 +95,7 @@
         <!-- 基础地图图层管理组合 -->
         <div class="btn-group">
             <span class="group-label" data-i18n="ui_base_layer">🌍 基础地图层</span>
-            <button onclick="triggerUploadBg()" class="btn-success" data-i18n="ui_select_first">➕ 选定首图 (4K)</button>
+            <button onclick="triggerUploadBg()" class="btn-success" data-i18n="ui_select_first">➕ 选定首图</button>
             <button id="btn-replace" onclick="triggerReplace()" disabled data-title-i18n="title_btn_replace" title="替换当前选中网格的底图" data-i18n="ui_replace_sel">🔄 替换当前选中图</button>
         </div>
         
@@ -175,7 +175,7 @@
         'zh': {
             'ui_local_proj': '📁 本地工程', 'title_proj_list': '选择本地已保存的项目', 'ui_load_map': '📂 读取地图',
             'ui_delete': '🗑️ 删除', 'title_proj_name': '项目名称', 'title_proj_ph': '输入项目名称',
-            'ui_save': '💾 保存 / 另存', 'ui_base_layer': '🌍 基础地图层', 'ui_select_first': '➕ 选定首图 (4K)',
+            'ui_save': '💾 保存 / 另存', 'ui_base_layer': '🌍 基础地图层', 'ui_select_first': '➕ 选定首图',
             'title_btn_replace': '替换当前选中网格的底图', 'ui_replace_sel': '🔄 替换当前选中图',
             'ui_build_layer': '✨ 建筑实体层', 'ui_smart_ext': '🔮 智能提取实体孤岛',
             'ui_export_godot': '📦 导出 Godot ZIP 引擎包', 'ui_basic_int': '👆 基础交互',
@@ -189,6 +189,8 @@
             'opt_poly': '📌 多边形套索 (首尾闭合生效)', 'opt_rect': '🔲 矩形套索 (鼠标拖拽松开生效)',
             'opt_free': '〰️ 物理划线刀 (拖拽划线切割孤岛)', 'ui_undo': '↩️ 撤销上一步', 'title_debug': '发给AI的边缘参考图',
             
+            'msg_invalid_size': '地图块尺寸无效：宽高至少 4 像素，且边缘必须保留有效内部区域。',
+            'msg_size_mismatch': '当前工程地图块尺寸：[EXPECTED]\n你上传的图片：[ACTUAL]\n请上传与工程 Tile Size 相同的图片。',
             'msg_ready': '就绪 | 悬浮物理区可单删 | 右键漫游 | 滚轮无极缩放',
             'msg_db_fail': '本地数据库初始化失败，保存功能可能不可用。', 'msg_enter_name': '请输入项目名称！',
             'msg_saving': '正在极速保存项目到本地缓存...', 'msg_save_succ': '项目 [NAME] 保存成功！',
@@ -200,17 +202,17 @@
             'msg_merge_succ': '🔗 框选合并生效！已完美融合为【绿色保留孤岛】', 'msg_merge_smart': ' (触发完整绿岛吸附)',
             'msg_merge_pixel': ' (仅切割像素)', 'msg_cut_succ': '✂️ 框选切除生效！框内像素已切下并独立为【红色剔除孤岛】。',
             'msg_line_cut': '〰️ 划线切割生效！实体已沿线条被物理一分为二，自动裂变为多个独立块。',
-            'msg_err_grid': '请点击已有图片旁边的格子提取参考图！', 'msg_need_base': '请先上传中心 4K 基础地图！',
+            'msg_err_grid': '请点击已有图片旁边的格子提取参考图！', 'msg_need_base': '请先上传基础地图！',
             'msg_sel_chunk': '已选中 [KEY] 区块', 'msg_mode_roam': '漫游模式：可抓取地图，点击虚线框十字提取扩图边缘',
             'msg_mode_cut': '✂️ 切除(变红)：使用套索框选或【点选】孤岛，选中的区域会被精确变为红色丢弃区。',
             'msg_mode_merge': '🔗 保留(变绿)：框住的红区会被同化，碰到绿岛会完整吸附！支持套索与【点选】。',
             'msg_mode_draw': '物理区绘制：无视地图边界自由划定游戏逻辑区域。悬停已画区域中心可显示红点删除。',
-            'msg_need_base2': '请先上传基础 4K 图像！', 'msg_clk_red': '✂️ 点击生效！该孤岛已标记为【红色剔除】',
+            'msg_need_base2': '请先上传基础图像！', 'msg_clk_red': '✂️ 点击生效！该孤岛已标记为【红色剔除】',
             'msg_clk_green': '🔗 点击生效！该孤岛已标记为【绿色保留】', 'msg_err_empty': '地图是空的！',
             'msg_pack': '正在打包图像及碰撞数据，请稍候...', 'msg_exp_succ': '导出成功！JSON中已包含所有独立透明PNG及世界绝对坐标！',
             'draw_upload': '⏳ 点击上传 AI 扩图', 'draw_ext': '➕ 提取边缘',
             
-            'ai_prompt_1': '生成一个 顶视图，开放像素宽高4096的地图，仙侠世界类型的。城镇图。要 像素画风的。高清大图。不要边框不要任何说明文字。只生成图片本身。要高清大图。 不要显示任何人，不要显示任何天空和云朵。建筑物不要太密集 不要太小。',
+            'ai_prompt_1': '生成一个 顶视图，开放像素地图[SIZE_HINT]，仙侠世界类型的。城镇图。要 像素画风的。高清大图。不要边框不要任何说明文字。只生成图片本身。要高清大图。 不要显示任何人，不要显示任何天空和云朵。建筑物不要太密集 不要太小。',
             'ai_prompt_1_msg': '【首图生成提示词】已尝试复制！\n如果剪贴板没生效，请手动复制下方内容发给AI：',
             'ai_prompt_2': '移除所有地板，不管草地还是道路，只要能走的区域全部替换成同一种纯粹的纯色背景。保留完整的建筑主体，不要改动建筑内部样式。',
             'ai_prompt_2_msg': '边缘参考图已下载！\n【建筑层提取提示词】已优化并自动复制到剪贴板！\n如果没有复制成功，请手动复制下方内容发给AI：'
@@ -218,7 +220,7 @@
         'en': {
             'ui_local_proj': '📁 Local Project', 'title_proj_list': 'Select a saved project', 'ui_load_map': '📂 Load Map',
             'ui_delete': '🗑️ Delete', 'title_proj_name': 'Project Name', 'title_proj_ph': 'Enter project name',
-            'ui_save': '💾 Save / Save As', 'ui_base_layer': '🌍 Base Map Layer', 'ui_select_first': '➕ Select First (4K)',
+            'ui_save': '💾 Save / Save As', 'ui_base_layer': '🌍 Base Map Layer', 'ui_select_first': '➕ Select First',
             'title_btn_replace': 'Replace the base map of the selected grid', 'ui_replace_sel': '🔄 Replace Selected',
             'ui_build_layer': '✨ Building Layer', 'ui_smart_ext': '🔮 Smart Extract Islands',
             'ui_export_godot': '📦 Export Godot ZIP', 'ui_basic_int': '👆 Basic Interaction',
@@ -232,6 +234,8 @@
             'opt_poly': '📌 Polygon Lasso (Close to apply)', 'opt_rect': '🔲 Rect Lasso (Drag & Release)',
             'opt_free': '〰️ Freehand Knife (Drag to cut islands)', 'ui_undo': '↩️ Undo', 'title_debug': 'Edge reference for AI',
             
+            'msg_invalid_size': 'Invalid tile size: dimensions must be at least 4 pixels and overlap must leave a valid interior.',
+            'msg_size_mismatch': 'Current project tile size: [EXPECTED]\nUploaded image: [ACTUAL]\nPlease upload an image with the same Tile Size.',
             'msg_ready': 'Ready | Hover physics area to delete | Right-click roam | Scroll zoom',
             'msg_db_fail': 'Local DB init failed, saving might be unavailable.', 'msg_enter_name': 'Please enter a project name!',
             'msg_saving': 'Saving project to local cache...', 'msg_save_succ': 'Project [NAME] saved successfully!',
@@ -243,17 +247,17 @@
             'msg_merge_succ': '🔗 Box merge applied! Fused into [Green Keep Island]', 'msg_merge_smart': ' (Triggered full island snap)',
             'msg_merge_pixel': ' (Pixels only)', 'msg_cut_succ': '✂️ Box cut applied! Split into [Red Discard Island].',
             'msg_line_cut': '〰️ Line cut applied! Entity physically split into independent blocks.',
-            'msg_err_grid': 'Please click an empty grid next to an existing image to extract reference!', 'msg_need_base': 'Please upload center 4K base map first!',
+            'msg_err_grid': 'Please click an empty grid next to an existing image to extract reference!', 'msg_need_base': 'Please upload base map first!',
             'msg_sel_chunk': 'Selected chunk [KEY]', 'msg_mode_roam': 'Roam mode: Drag map, click dashed cross to extract expansion edge',
             'msg_mode_cut': '✂️ Cut (Red): Lasso or [Click] island to precisely discard area.',
             'msg_mode_merge': '🔗 Keep (Green): Lasso or [Click] to assimilate red areas and snap green islands!',
             'msg_mode_draw': 'Physics draw: Free draw game logic areas. Hover center of drawn area to delete.',
-            'msg_need_base2': 'Please upload 4K base image first!', 'msg_clk_red': '✂️ Click applied! Island marked as [Red Discard]',
+            'msg_need_base2': 'Please upload base image first!', 'msg_clk_red': '✂️ Click applied! Island marked as [Red Discard]',
             'msg_clk_green': '🔗 Click applied! Island marked as [Green Keep]', 'msg_err_empty': 'The map is empty!',
             'msg_pack': 'Packing images and collision data, please wait...', 'msg_exp_succ': 'Export successful! JSON includes all transparent PNGs & world coordinates!',
             'draw_upload': '⏳ Click to upload AI Expand', 'draw_ext': '➕ Extract Edge',
             
-            'ai_prompt_1': 'Generate a top-view, 4096px open map, Xianxia/Fantasy world type. Town map. Pixel art style. High-res large image. No borders, no text. Image only. High resolution. No people, no sky/clouds. Buildings shouldn\'t be too dense or too small.',
+            'ai_prompt_1': 'Generate a top-view, open map[SIZE_HINT], Xianxia/Fantasy world type. Town map. Pixel art style. High-res large image. No borders, no text. Image only. High resolution. No people, no sky/clouds. Buildings shouldn\'t be too dense or too small.',
             'ai_prompt_1_msg': '[First Image Prompt] copied!\nIf clipboard failed, manually copy the text below for AI:',
             'ai_prompt_2': 'Remove all floors, whether grass or roads, replace all walkable areas with the exact same solid pure background color. Keep the building main bodies intact, do not alter internal building styles.',
             'ai_prompt_2_msg': 'Edge reference downloaded!\n[Building Layer Prompt] optimized and copied to clipboard!\nIf it failed, manually copy the text below for AI:'
@@ -262,6 +266,7 @@
     
     function t(key, vars={}) {
         let text = i18n[currentLang][key] || key;
+        if (key === 'ai_prompt_1') text = text.replace('[SIZE_HINT]', tileWidth && tileHeight ? ` (${tileWidth} × ${tileHeight}px)` : '');
         for(let k in vars) { text = text.replace(k, vars[k]); }
         return text;
     }
@@ -286,13 +291,51 @@
     window.addEventListener('resize', () => { resizeCanvas(); draw(); });
     resizeCanvas();
 
-    const CHUNK_SIZE = 4096; 
-    const EDGE_WIDTH = 512;  
-    const STRIDE = CHUNK_SIZE - EDGE_WIDTH; 
+    let tileWidth = null, tileHeight = null;
+    let edgeRatio = 0.125;
+    let edgeWidthX = 0, edgeHeightY = 0, strideX = 0, strideY = 0;
+
+    function setTileSize(width, height, ratio = 0.125) {
+        if (width === null && height === null) {
+            tileWidth = tileHeight = null;
+            edgeRatio = 0.125;
+            edgeWidthX = edgeHeightY = strideX = strideY = 0;
+            return;
+        }
+        if (!Number.isInteger(width) || !Number.isInteger(height) || width < 4 || height < 4 ||
+            !Number.isFinite(ratio) || ratio <= 0 || ratio >= 0.5 ||
+            Math.round(width * ratio) < 1 || Math.round(height * ratio) < 1 ||
+            2 * Math.round(width * ratio) >= width || 2 * Math.round(height * ratio) >= height) {
+            throw new Error(t('msg_invalid_size'));
+        }
+        tileWidth = width; tileHeight = height; edgeRatio = ratio;
+        edgeWidthX = Math.round(width * ratio); edgeHeightY = Math.round(height * ratio);
+        strideX = width - edgeWidthX; strideY = height - edgeHeightY;
+    }
+
+    function validateTileImage(img) {
+        const width = img.naturalWidth, height = img.naturalHeight;
+        if (Object.keys(chunks).length === 0) {
+            try { setTileSize(width, height); } catch (error) { alert(error.message); return false; }
+        } else if (width !== tileWidth || height !== tileHeight) {
+            alert(t('msg_size_mismatch', { '[EXPECTED]': `${tileWidth} × ${tileHeight}`, '[ACTUAL]': `${width} × ${height}` }));
+            return false;
+        }
+        return true;
+    }
+
+    function fitFirstTile() {
+        const toolbarHeight = document.getElementById('toolbar').getBoundingClientRect().height;
+        const availableHeight = Math.max(1, canvas.height - toolbarHeight - 40);
+        scale = Math.max(0.01, Math.min(3, (canvas.width - 40) / tileWidth, availableHeight / tileHeight));
+        cameraX = (canvas.width - tileWidth * scale) / 2;
+        cameraY = toolbarHeight + (canvas.height - toolbarHeight - tileHeight * scale) / 2;
+    }
+
 
     let scale = 0.15;
-    let cameraX = window.innerWidth / 2 - (CHUNK_SIZE * scale) / 2;
-    let cameraY = window.innerHeight / 2 - (CHUNK_SIZE * scale) / 2;
+    let cameraX = window.innerWidth / 2;
+    let cameraY = window.innerHeight / 2;
     
     let mode = 'expand'; 
     let shapeTool = 'click'; 
@@ -383,7 +426,7 @@
         if(!pName) return alert(t('msg_enter_name'));
         
         setStatus(t('msg_saving'));
-        const data = { name: pName, timestamp: Date.now(), cameraX, cameraY, scale, globalShapes, chunks: {} };
+        const data = { name: pName, timestamp: Date.now(), formatVersion: 2, tileWidth, tileHeight, edgeRatio, cameraX, cameraY, scale, globalShapes, chunks: {} };
         
         for(let key in chunks) {
             let c = chunks[key]; let sc = { ...c };
@@ -413,6 +456,11 @@
         
         request.onsuccess = async (e) => {
             const data = e.target.result; if(!data) return;
+            try {
+                const legacy = data.tileWidth === undefined && data.tileHeight === undefined;
+                setTileSize(legacy ? 4096 : data.tileWidth, legacy ? 4096 : data.tileHeight,
+                    legacy ? 0.125 : (data.edgeRatio ?? 0.125));
+            } catch (error) { alert(error.message); return; }
             cameraX = data.cameraX; cameraY = data.cameraY; scale = data.scale;
             globalShapes = data.globalShapes; document.getElementById('project-name').value = data.name;
             
@@ -480,7 +528,8 @@
         availableSlots = {};
         for (let key in chunks) {
             const [gx, gy] = key.split('_').map(Number);
-            const neighbors = [[gx-1,gy], [gx+1,gy], [gx,gy-1], [gx,gy+1]];
+            const neighbors = [[gx-1,gy], [gx+1,gy], [gx,gy-1], [gx,gy+1],
+                [gx-1,gy-1], [gx+1,gy-1], [gx-1,gy+1], [gx+1,gy+1]];
             for (let [nx, ny] of neighbors) {
                 const nKey = `${nx}_${ny}`; if (!chunks[nKey]) availableSlots[nKey] = { gx: nx, gy: ny };
             }
@@ -489,6 +538,7 @@
 
     document.getElementById('upload-img').addEventListener('change', function(e) {
         if (!e.target.files[0]) return;
+        const isFirstTile = Object.keys(chunks).length === 0;
         createChunkImage(e.target.files[0], 0, 0, 0, 0, (fullImg, croppedImg, dataURL, cropW, cropH, fullDataURL) => {
             chunks["0_0"] = { 
                 isPending: false, fullImage: fullImg, croppedImage: croppedImg, 
@@ -496,6 +546,7 @@
                 baseX: 0, baseY: 0, drawX: 0, drawY: 0, 
                 cropL: 0, cropT: 0, cropW: cropW, cropH: cropH, buildings: [] 
             };
+            if (isFirstTile) fitFirstTile();
             selectedChunkKey = "0_0"; e.target.value = ''; updateUI(); draw();
         });
     });
@@ -506,16 +557,16 @@
         const leftN = chunks[`${gx-1}_${gy}`], rightN = chunks[`${gx+1}_${gy}`];
         const topN = chunks[`${gx}_${gy-1}`], bottomN = chunks[`${gx}_${gy+1}`];
 
-        const cropL = (leftN && !leftN.isPending) ? EDGE_WIDTH : 0;
-        const cropR = (rightN && !rightN.isPending) ? EDGE_WIDTH : 0;
-        const cropT = (topN && !topN.isPending) ? EDGE_WIDTH : 0;
-        const cropB = (bottomN && !bottomN.isPending) ? EDGE_WIDTH : 0;
+        const cropL = (leftN && !leftN.isPending) ? edgeWidthX : 0;
+        const cropR = (rightN && !rightN.isPending) ? edgeWidthX : 0;
+        const cropT = (topN && !topN.isPending) ? edgeHeightY : 0;
+        const cropB = (bottomN && !bottomN.isPending) ? edgeHeightY : 0;
 
         createChunkImage(e.target.files[0], cropL, cropT, cropR, cropB, (fullImg, croppedImg, dataURL, cropW, cropH, fullDataURL) => {
             chunks[targetUploadChunk] = { 
                 isPending: false, fullImage: fullImg, croppedImage: croppedImg, 
                 dataURL: dataURL, fullDataURL: fullDataURL,
-                baseX: gx * STRIDE, baseY: gy * STRIDE, drawX: gx * STRIDE + cropL, drawY: gy * STRIDE + cropT,
+                baseX: gx * strideX, baseY: gy * strideY, drawX: gx * strideX + cropL, drawY: gy * strideY + cropT,
                 cropL: cropL, cropT: cropT, cropW: cropW, cropH: cropH, buildings: [] 
             };
             selectedChunkKey = targetUploadChunk; 
@@ -528,15 +579,18 @@
         reader.onload = function(event) {
             const img = new Image();
             img.onload = () => {
-                const fullC = document.createElement('canvas'); fullC.width = fullC.height = CHUNK_SIZE;
-                fullC.getContext('2d').drawImage(img, 0, 0, CHUNK_SIZE, CHUNK_SIZE);
-                const fullDataURL = fullC.toDataURL('image/jpeg', 0.9);
+                if (!validateTileImage(img)) return;
+                const fullC = document.createElement('canvas'); fullC.width = tileWidth; fullC.height = tileHeight;
+                const fullCtx = fullC.getContext('2d'); fullCtx.imageSmoothingEnabled = false;
+                fullCtx.drawImage(img, 0, 0);
+                const fullDataURL = fullC.toDataURL('image/png');
                 
-                const cropW = CHUNK_SIZE - cropL - cropR, cropH = CHUNK_SIZE - cropT - cropB;
+                const cropW = tileWidth - cropL - cropR, cropH = tileHeight - cropT - cropB;
                 const cropC = document.createElement('canvas'); cropC.width = cropW; cropC.height = cropH;
-                cropC.getContext('2d').drawImage(fullC, cropL, cropT, cropW, cropH, 0, 0, cropW, cropH);
+                const cropCtx = cropC.getContext('2d'); cropCtx.imageSmoothingEnabled = false;
+                cropCtx.drawImage(fullC, cropL, cropT, cropW, cropH, 0, 0, cropW, cropH);
                 
-                const croppedDataURL = cropC.toDataURL('image/jpeg', 0.9);
+                const croppedDataURL = cropC.toDataURL('image/png');
                 
                 const fullImg = new Image(); 
                 const croppedImg = new Image();
@@ -568,7 +622,7 @@
     document.getElementById('replace-chunk-img').addEventListener('change', function(e) {
         if (!selectedChunkKey || !e.target.files[0]) return;
         const c = chunks[selectedChunkKey];
-        createChunkImage(e.target.files[0], c.cropL, c.cropT, CHUNK_SIZE - c.cropL - c.cropW, CHUNK_SIZE - c.cropT - c.cropH, 
+        createChunkImage(e.target.files[0], c.cropL, c.cropT, tileWidth - c.cropL - c.cropW, tileHeight - c.cropT - c.cropH,
         (fullImg, croppedImg, dataURL, cropW, cropH, fullDataURL) => {
             c.fullImage = fullImg; c.croppedImage = croppedImg; 
             c.dataURL = dataURL; c.fullDataURL = fullDataURL;
@@ -690,16 +744,18 @@
             const img = new Image();
             img.onload = () => {
                 setTimeout(() => { 
+                    if (!validateTileImage(img)) return;
                     const chunk = chunks[selectedChunkKey];
                     chunk.buildings = []; 
 
-                    const canvas4K = document.createElement('canvas'); canvas4K.width = canvas4K.height = CHUNK_SIZE;
-                    const ctx4K = canvas4K.getContext('2d', { willReadFrequently: true });
-                    ctx4K.drawImage(img, 0, 0, CHUNK_SIZE, CHUNK_SIZE);
+                    const fullCanvas = document.createElement('canvas'); fullCanvas.width = tileWidth; fullCanvas.height = tileHeight;
+                    const fullCtx = fullCanvas.getContext('2d', { willReadFrequently: true });
+                    fullCtx.imageSmoothingEnabled = false;
+                    fullCtx.drawImage(img, 0, 0);
 
                     const cropC = document.createElement('canvas'); cropC.width = chunk.cropW; cropC.height = chunk.cropH;
                     const cropCtx = cropC.getContext('2d', { willReadFrequently: true });
-                    cropCtx.drawImage(canvas4K, chunk.cropL, chunk.cropT, chunk.cropW, chunk.cropH, 0, 0, chunk.cropW, chunk.cropH);
+                    cropCtx.drawImage(fullCanvas, chunk.cropL, chunk.cropT, chunk.cropW, chunk.cropH, 0, 0, chunk.cropW, chunk.cropH);
 
                     const imgData = cropCtx.getImageData(0, 0, chunk.cropW, chunk.cropH);
                     const data = imgData.data;
@@ -886,26 +942,34 @@
     function downloadEdgeForAI(gx, gy) {
         const leftN = chunks[`${gx - 1}_${gy}`], rightN = chunks[`${gx + 1}_${gy}`];
         const topN = chunks[`${gx}_${gy - 1}`], bottomN = chunks[`${gx}_${gy + 1}`];
+        const topLeft = chunks[`${gx - 1}_${gy - 1}`], topRight = chunks[`${gx + 1}_${gy - 1}`];
+        const bottomLeft = chunks[`${gx - 1}_${gy + 1}`], bottomRight = chunks[`${gx + 1}_${gy + 1}`];
 
-        if ((!leftN || leftN.isPending) && (!rightN || rightN.isPending) && (!topN || topN.isPending) && (!bottomN || bottomN.isPending)) {
+        if (![leftN, rightN, topN, bottomN, topLeft, topRight, bottomLeft, bottomRight].some(n => n && !n.isPending)) {
             return alert(t('msg_err_grid'));
         }
         
         const edgeCanvas = document.createElement('canvas');
-        edgeCanvas.width = edgeCanvas.height = CHUNK_SIZE;
-        const eCtx = edgeCanvas.getContext('2d');
+        edgeCanvas.width = tileWidth; edgeCanvas.height = tileHeight;
+        const eCtx = edgeCanvas.getContext('2d'); eCtx.imageSmoothingEnabled = false;
         
-        if (leftN && !leftN.isPending) eCtx.drawImage(leftN.fullImage, CHUNK_SIZE - EDGE_WIDTH, 0, EDGE_WIDTH, CHUNK_SIZE, 0, 0, EDGE_WIDTH, CHUNK_SIZE);
-        else if (rightN && !rightN.isPending) eCtx.drawImage(rightN.fullImage, 0, 0, EDGE_WIDTH, CHUNK_SIZE, CHUNK_SIZE - EDGE_WIDTH, 0, EDGE_WIDTH, CHUNK_SIZE);
-        else if (topN && !topN.isPending) eCtx.drawImage(topN.fullImage, 0, CHUNK_SIZE - EDGE_WIDTH, CHUNK_SIZE, EDGE_WIDTH, 0, 0, CHUNK_SIZE, EDGE_WIDTH);
-        else if (bottomN && !bottomN.isPending) eCtx.drawImage(bottomN.fullImage, 0, 0, CHUNK_SIZE, EDGE_WIDTH, 0, CHUNK_SIZE - EDGE_WIDTH, CHUNK_SIZE, EDGE_WIDTH);
+        if (leftN && !leftN.isPending) eCtx.drawImage(leftN.fullImage, tileWidth - edgeWidthX, 0, edgeWidthX, tileHeight, 0, 0, edgeWidthX, tileHeight);
+        if (rightN && !rightN.isPending) eCtx.drawImage(rightN.fullImage, 0, 0, edgeWidthX, tileHeight, tileWidth - edgeWidthX, 0, edgeWidthX, tileHeight);
+        if (topN && !topN.isPending) eCtx.drawImage(topN.fullImage, 0, tileHeight - edgeHeightY, tileWidth, edgeHeightY, 0, 0, tileWidth, edgeHeightY);
+        if (bottomN && !bottomN.isPending) eCtx.drawImage(bottomN.fullImage, 0, 0, tileWidth, edgeHeightY, 0, tileHeight - edgeHeightY, tileWidth, edgeHeightY);
+
+        // Draw diagonal references last so their corners take precedence at intersections.
+        if (topLeft && !topLeft.isPending) eCtx.drawImage(topLeft.fullImage, tileWidth - edgeWidthX, tileHeight - edgeHeightY, edgeWidthX, edgeHeightY, 0, 0, edgeWidthX, edgeHeightY);
+        if (topRight && !topRight.isPending) eCtx.drawImage(topRight.fullImage, 0, tileHeight - edgeHeightY, edgeWidthX, edgeHeightY, tileWidth - edgeWidthX, 0, edgeWidthX, edgeHeightY);
+        if (bottomLeft && !bottomLeft.isPending) eCtx.drawImage(bottomLeft.fullImage, tileWidth - edgeWidthX, 0, edgeWidthX, edgeHeightY, 0, tileHeight - edgeHeightY, edgeWidthX, edgeHeightY);
+        if (bottomRight && !bottomRight.isPending) eCtx.drawImage(bottomRight.fullImage, 0, 0, edgeWidthX, edgeHeightY, tileWidth - edgeWidthX, tileHeight - edgeHeightY, edgeWidthX, edgeHeightY);
 
         const dataURL = edgeCanvas.toDataURL('image/png');
         document.getElementById('debug-img').src = dataURL; document.getElementById('debug-img').style.display = 'block';
         
-        const link = document.createElement('a'); link.download = `4K_Reference_${gx}_${gy}.png`; link.href = dataURL; link.click(); 
+        const link = document.createElement('a'); link.download = `Reference_${tileWidth}x${tileHeight}_${gx}_${gy}.png`; link.href = dataURL; link.click();
         
-        chunks[`${gx}_${gy}`] = { isPending: true, baseX: gx * STRIDE, baseY: gy * STRIDE }; 
+        chunks[`${gx}_${gy}`] = { isPending: true, baseX: gx * strideX, baseY: gy * strideY };
         updateUI(); draw();
 
         const txt = t('ai_prompt_2');
@@ -944,11 +1008,11 @@
         }
         for (let key in chunks) {
             const c = chunks[key];
-            if (c.isPending && wx >= c.baseX && wx <= c.baseX + CHUNK_SIZE && wy >= c.baseY && wy <= c.baseY + CHUNK_SIZE) return { type: 'pending', key: key };
+            if (c.isPending && wx >= c.baseX && wx <= c.baseX + tileWidth && wy >= c.baseY && wy <= c.baseY + tileHeight) return { type: 'pending', key: key };
         }
         for (let key in availableSlots) {
             const s = availableSlots[key];
-            if (wx >= s.gx * STRIDE && wx <= s.gx * STRIDE + CHUNK_SIZE && wy >= s.gy * STRIDE && wy <= s.gy * STRIDE + CHUNK_SIZE) return { type: 'slot', key: key };
+            if (wx >= s.gx * strideX && wx <= s.gx * strideX + tileWidth && wy >= s.gy * strideY && wy <= s.gy * strideY + tileHeight) return { type: 'slot', key: key };
         }
         return null;
     }
@@ -1129,7 +1193,8 @@
             const chunk = chunks[key];
             if (chunk.isPending) continue; 
             const [gx, gy] = key.split('_').map(Number);
-            const imgName = `chunk_${gx}_${gy}_bg.jpg`; 
+            const imageExtension = chunk.dataURL.startsWith('data:image/png') ? 'png' : 'jpg';
+            const imgName = `chunk_${gx}_${gy}_bg.${imageExtension}`;
 
             imagesFolder.file(imgName, chunk.dataURL.split(',')[1], {base64: true});
             
@@ -1169,6 +1234,7 @@
 
     function draw() {
         ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.imageSmoothingEnabled = false;
         ctx.translate(cameraX, cameraY); ctx.scale(scale, scale);
         
         const startX = -cameraX / scale, endX = startX + (canvas.width / scale);
@@ -1177,12 +1243,12 @@
         for (let key in chunks) {
             const chunk = chunks[key];
             if (chunk.isPending) {
-                if (chunk.baseX + CHUNK_SIZE < startX || chunk.baseX > endX || chunk.baseY + CHUNK_SIZE < startY || chunk.baseY > endY) continue;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)'; ctx.fillRect(chunk.baseX, chunk.baseY, CHUNK_SIZE, CHUNK_SIZE);
+                if (chunk.baseX + tileWidth < startX || chunk.baseX > endX || chunk.baseY + tileHeight < startY || chunk.baseY > endY) continue;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)'; ctx.fillRect(chunk.baseX, chunk.baseY, tileWidth, tileHeight);
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.lineWidth = 4 / scale; ctx.setLineDash([20/scale, 20/scale]);
-                ctx.strokeRect(chunk.baseX + 10, chunk.baseY + 10, CHUNK_SIZE - 20, CHUNK_SIZE - 20); ctx.setLineDash([]);
+                ctx.strokeRect(chunk.baseX + 10, chunk.baseY + 10, tileWidth - 20, tileHeight - 20); ctx.setLineDash([]);
                 ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.font = `120px sans-serif`; ctx.textAlign = 'center';
-                ctx.fillText(t('draw_upload'), chunk.baseX + CHUNK_SIZE/2, chunk.baseY + CHUNK_SIZE/2); ctx.textAlign = 'left';
+                ctx.fillText(t('draw_upload'), chunk.baseX + tileWidth/2, chunk.baseY + tileHeight/2); ctx.textAlign = 'left';
             } else {
                 if (chunk.drawX + chunk.cropW < startX || chunk.drawX > endX || chunk.drawY + chunk.cropH < startY || chunk.drawY > endY) continue;
                 ctx.drawImage(chunk.croppedImage, chunk.drawX, chunk.drawY, chunk.cropW, chunk.cropH);
@@ -1202,12 +1268,12 @@
         if (mode === 'expand') {
             for (let key in availableSlots) {
                 const s = availableSlots[key];
-                const bx = s.gx * STRIDE, by = s.gy * STRIDE;
-                if (bx + CHUNK_SIZE < startX || bx > endX || by + CHUNK_SIZE < startY || by > endY) continue;
+                const bx = s.gx * strideX, by = s.gy * strideY;
+                if (bx + tileWidth < startX || bx > endX || by + tileHeight < startY || by > endY) continue;
                 ctx.strokeStyle = 'rgba(0, 255, 204, 0.2)'; ctx.lineWidth = 4 / scale; ctx.setLineDash([20/scale, 20/scale]);
-                ctx.strokeRect(bx, by, CHUNK_SIZE, CHUNK_SIZE); ctx.setLineDash([]);
+                ctx.strokeRect(bx, by, tileWidth, tileHeight); ctx.setLineDash([]);
                 ctx.fillStyle = 'rgba(0, 255, 204, 0.5)'; ctx.font = `150px sans-serif`; ctx.textAlign = 'center';
-                ctx.fillText(t('draw_ext'), bx + CHUNK_SIZE/2, by + CHUNK_SIZE/2); ctx.textAlign = 'left';
+                ctx.fillText(t('draw_ext'), bx + tileWidth/2, by + tileHeight/2); ctx.textAlign = 'left';
             }
         }
 

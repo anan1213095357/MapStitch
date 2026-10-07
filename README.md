@@ -6,7 +6,7 @@
 
 *Read this in other languages: [简体中文](README.zh-cn.md)*
 
-A 4K seamless map splicing and asset editor explicitly designed for 2D games, especially pixel art and fantasy RPG worlds.
+A seamless map splicing and asset editor explicitly designed for 2D games, especially pixel art and fantasy RPG worlds.
 
 <img width="3008" height="1958" alt="MapStitch Preview 1" src="https://github.com/user-attachments/assets/15ff1ae3-aba1-405f-b40a-4ae2e6e38233" />
 <img width="3021" height="1965" alt="MapStitch Preview 2" src="https://github.com/user-attachments/assets/888d3f1f-41ac-49da-addc-48f032484238" />
@@ -17,14 +17,15 @@ Say goodbye to tedious manual alignment in Photoshop! MapStitch is a pure web-ba
 
 To maximize the potential of this tool, we recommend the following AI-assisted workflow:
 
-1. **Base Map Generation**: Use AI to generate a top-down `4096 x 4096` 2D map and upload it to MapStitch as your starting chunk.
+1. **Base Map Generation**: Use AI to generate a top-down 2D map at your chosen resolution and upload it to MapStitch as your starting chunk.
+   The first image sets the project tile width and height, including rectangular tiles. Later base and building images must match exactly; uploads are never resized. Overlap is 12.5% on each axis (rounded): a 1024 tile uses a 128 edge and 896 stride. Saved projects retain these dimensions; legacy projects without size metadata load as 4096 tiles. New base images use lossless PNG storage; existing JPEG projects remain readable without conversion.
 2. **Asset Extraction**: Feed the original image back to the AI (or use image editing software) to remove all ground textures/paths and replace the background with **any pure color**, leaving only the buildings and objects intact.
 3. **Spatial Editing**: Upload the solid-background image. MapStitch will automatically key out the background and extract the building entities. You can then use polygon tools to hollow out or merge structures and paint precise occlusion/collision masks.
 4. **Seamless Expansion**: Click the `➕` icon on the edges of the grid. The tool will generate perfectly aligned edge reference images. Feed these to the AI for outpainting, upload the new generated chunks, and repeat the process to build a massive, infinite map.
 
 ## ✨ Features
 
-- 🧩 **4K Seamless Matrix Splicing**: Automatically crops overlapping edges of adjacent images to ensure 100% pixel-perfect alignment between chunks.
+- 🧩 **Seamless Matrix Splicing**: Automatically crops overlapping edges of adjacent images to ensure 100% pixel-perfect alignment between chunks.
 - 🧠 **Smart Background Separation (Any Solid Color)**: Dynamically analyzes and keys out any solid background color to precisely extract buildings while automatically healing edges and applying transparency.
 - ✂️ **Polygon Topology Editing**: Draw or box-select areas to "hollow out" unwanted internal parts of a building, or "stitch" fragmented pieces into a single render layer.
 - 🎨 **Multi-Layer Mask Painting**: Built-in visual brushes allow you to freely draw **Collision zones (Red)**, **Occlusion zones (Blue)**, and **Foreground layers (Yellow)**.
@@ -36,8 +37,8 @@ To maximize the potential of this tool, we recommend the following AI-assisted w
 This project is a single-file application requiring no Node.js dependencies or build tools.
 
 1. Clone or download this repository.
-2. Double-click `index.html` to open it in your browser.
-3. Click **"Upload 4K Background" (上传 4K 背景)** to start building your map.
+2. Double-click `edit.html` to open it in your browser.
+3. Click **"Select First" (选定首图)** to start building your map.
 4. **Godot Integration**: Extract the exported ZIP package into your Godot project. Attach the `MapChunkManager.cs` script to your main scene and set the `Map Data Path` to the extracted `map_data.json`.
 
 ## 🕹️ Controls
@@ -60,7 +61,7 @@ The exported ZIP includes a `map_data.json` formatted for easy deserialization i
       "chunk_id": "0_0",
       "grid_x": 0,
       "grid_y": 0,
-      "background_path": "images/chunk_0_0_bg.jpg",
+      "background_path": "images/chunk_0_0_bg.png",
       "global_position": { "x": 0, "y": 0 },
       "buildings": [
         {
